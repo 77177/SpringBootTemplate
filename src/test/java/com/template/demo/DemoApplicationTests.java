@@ -19,8 +19,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.List;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(

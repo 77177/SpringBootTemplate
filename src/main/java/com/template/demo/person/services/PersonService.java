@@ -2,9 +2,6 @@ package com.template.demo.person.services;
 
 import com.template.demo.person.models.Person;
 import com.template.demo.person.repositories.PersonRepository;
-import javassist.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
