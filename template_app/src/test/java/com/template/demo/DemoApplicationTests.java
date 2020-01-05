@@ -8,6 +8,7 @@ import com.jayway.restassured.response.ExtractableResponse;
 import com.jayway.restassured.response.Response;
 import com.template.demo.person.models.Person;
 import com.template.demo.person.services.PersonService;
+import com.test.TestDataGenerator;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.lang.reflect.InvocationTargetException;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,6 +36,8 @@ class DemoApplicationTests {
     @LocalServerPort
     private int portNumber;
 
+    private TestDataGenerator testDataGenerator = new TestDataGenerator();
+
     @BeforeEach
     public void setup() {
         RestAssured.port = portNumber;
@@ -47,9 +52,9 @@ class DemoApplicationTests {
     }
 
     @Test
-    public void testPostGetPutDelete() {
+    public void testPostGetPutDelete() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
-        Person person = new Person(1,"First","Last");
+        Person person = testDataGenerator.getTestObject(Person.class);
 
         //POST TEST ----------------------------------------------------------------------------------------------
         ExtractableResponse<Response> postResponse = RestAssured.given().contentType(ContentType.JSON)
@@ -71,7 +76,8 @@ class DemoApplicationTests {
                 .statusCode(200);
         //---------------------------------------------------------------------------------------------------------
 
-        Person personUpdated = new Person(id,"NewFirst","NewLast");
+        Person personUpdated = testDataGenerator.getTestObject(Person.class);
+        personUpdated.setId(id);
 
         //PUT TEST ----------------------------------------------------------------------------------------------
         ExtractableResponse<Response> putResponse = RestAssured.given().contentType(ContentType.JSON)

@@ -18,7 +18,7 @@ public class TestDataGenerator {
         if (f.getType().equals(String.class)) {
             String string = Stream.iterate(0, i -> ++i)
                     .limit(20)
-                    .map(integer -> randomGenerator.nextInt() % 100)
+                    .map(integer -> randomGenerator.nextInt(64 - 34 + 1))
                     .mapToInt(integer -> integer)
                     .mapToObj(i -> (char) (i))
                     .map(String::valueOf)

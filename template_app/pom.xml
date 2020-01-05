@@ -19,6 +19,7 @@
 		<rest-assured.version>2.9.0</rest-assured.version>
 		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <junit.version>4.12</junit.version>
+        <test_data_generator.version>1.0-SNAPSHOT</test_data_generator.version>
     </properties>
 
     <dependencies>
@@ -57,6 +58,12 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox-swagger2.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>test_data_generator</artifactId>
+            <version>${test_data_generator.version}</version>
         </dependency>
 
         <dependency>
