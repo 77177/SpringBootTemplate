@@ -47,7 +47,8 @@ class PersonServiceTest {
         final Person result = personServiceUnderTest.getPerson(person.getId());
 
         // Verify the results
-        verify(mockPersonRepository).findById(0L);
+        verify(mockPersonRepository).findById(person.getId());
+        assertEquals(person,result);
     }
 
     @Test
