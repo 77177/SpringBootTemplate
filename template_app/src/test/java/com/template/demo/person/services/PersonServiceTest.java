@@ -37,10 +37,10 @@ class PersonServiceTest {
     @Test
     void testGetPerson() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         // Setup
-
-        // Configure PersonRepository.findById(...).
         final Person person = testDataGenerator.getTestObject(Person.class);
         final Optional<Person> personOptional = Optional.of(person);
+
+        // Configure PersonRepository.findById(...).
         when(mockPersonRepository.findById(person.getId())).thenReturn(personOptional);
 
         // Run the test
