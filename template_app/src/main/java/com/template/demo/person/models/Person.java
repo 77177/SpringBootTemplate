@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Person {
+public class Person implements Cloneable {
 
     @Id
     @GeneratedValue

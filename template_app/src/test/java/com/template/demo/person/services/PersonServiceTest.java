@@ -80,6 +80,7 @@ class PersonServiceTest {
         // Configure PersonRepository.save(...).
         final Person createdPerson = (Person) person.clone();
         createdPerson.setId(1L);
+
         when(mockPersonRepository.save(person)).thenReturn(createdPerson);
 
         // Run the test
