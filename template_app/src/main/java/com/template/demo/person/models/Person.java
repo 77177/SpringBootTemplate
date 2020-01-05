@@ -20,4 +20,9 @@ public class Person {
 
     private String firstName;
     private String lastName;
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

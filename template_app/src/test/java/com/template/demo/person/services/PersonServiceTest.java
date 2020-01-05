@@ -59,6 +59,7 @@ class PersonServiceTest {
         when(mockPersonRepository.existsById(person.getId())).thenReturn(true);
 
         // Configure PersonRepository.save(...).
+
         when(mockPersonRepository.save(person)).thenReturn(person);
 
         // Run the test
@@ -70,14 +71,14 @@ class PersonServiceTest {
     }
 
     @Test
-    void testCreatePerson() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    void testCreatePerson() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, CloneNotSupportedException {
         // Setup
         final Person person = testDataGenerator.getTestObject(Person.class);
 
         when(mockPersonRepository.existsById(person.getId())).thenReturn(false);
 
         // Configure PersonRepository.save(...).
-        final Person createdPerson = testDataGenerator.getTestObject(Person.class);
+        final Person createdPerson = (Person) person.clone();
         createdPerson.setId(1L);
         when(mockPersonRepository.save(person)).thenReturn(createdPerson);
 
@@ -85,7 +86,7 @@ class PersonServiceTest {
         final Long result = personServiceUnderTest.createPerson(person);
 
         // Verify the results
-        verify(mockPersonRepository).save(any(Person.class));
+        verify(mockPersonRepository).save(person);
         assertEquals(createdPerson.getId(), result);
     }
 
