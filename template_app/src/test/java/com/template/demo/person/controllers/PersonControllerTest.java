@@ -51,7 +51,7 @@ class PersonControllerTest {
         // Setup
         final Person person = testDataGenerator.getTestObject(Person.class);
 
-        when(mockPersonService.updatePerson(any(Person.class))).thenReturn(person.getId());
+        when(mockPersonService.updatePerson(person)).thenReturn(person.getId());
 
         // Run the test
         final Long result = personControllerUnderTest.updatePerson(person);
@@ -66,15 +66,15 @@ class PersonControllerTest {
         // Setup
         final Person person = testDataGenerator.getTestObject(Person.class);
 
-        long id = 1L;
-        when(mockPersonService.createPerson(any(Person.class))).thenReturn(id);
+        long createdId = 1L;
+        when(mockPersonService.createPerson(person)).thenReturn(createdId);
 
         // Run the test
         final Long result = personControllerUnderTest.createPerson(person);
 
         // Verify the results
         verify(mockPersonService).createPerson(person);
-        assertEquals(id, result);
+        assertEquals(createdId, result);
     }
 
     @Test
