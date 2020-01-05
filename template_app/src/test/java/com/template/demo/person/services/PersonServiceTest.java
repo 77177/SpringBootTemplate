@@ -59,13 +59,13 @@ class PersonServiceTest {
         when(mockPersonRepository.existsById(person.getId())).thenReturn(true);
 
         // Configure PersonRepository.save(...).
-        when(mockPersonRepository.save(any(Person.class))).thenReturn(person);
+        when(mockPersonRepository.save(person)).thenReturn(person);
 
         // Run the test
         final Long result = personServiceUnderTest.updatePerson(person);
 
         // Verify the results
-        verify(mockPersonRepository).save(any(Person.class));
+        verify(mockPersonRepository).save(person);
         assertEquals(person.getId(), result);
     }
 
@@ -77,15 +77,16 @@ class PersonServiceTest {
         when(mockPersonRepository.existsById(person.getId())).thenReturn(false);
 
         // Configure PersonRepository.save(...).
-        person.setId(1L);
-        when(mockPersonRepository.save(any(Person.class))).thenReturn(person);
+        final Person createdPerson = testDataGenerator.getTestObject(Person.class);
+        createdPerson.setId(1L);
+        when(mockPersonRepository.save(person)).thenReturn(createdPerson);
 
         // Run the test
         final Long result = personServiceUnderTest.createPerson(person);
 
         // Verify the results
         verify(mockPersonRepository).save(any(Person.class));
-        assertEquals(1L, result);
+        assertEquals(createdPerson.getId(), result);
     }
 
     @Test
