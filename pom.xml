@@ -5,13 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>template</artifactId>
+    <artifactId>template_project</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
     <modules>
-        <module>demo</module>
+        <module>template_app</module>
+        <module>testDataGenerator</module>
     </modules>
 
 
