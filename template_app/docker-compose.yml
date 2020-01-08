@@ -7,3 +7,12 @@ services:
       context: .
     ports:
       - 8443:8443
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: postgres:10
+    ports:
+    - 5432:5432
+
