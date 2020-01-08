@@ -7,4 +7,3 @@ services:
       context: .
     ports:
       - 8443:8443
-

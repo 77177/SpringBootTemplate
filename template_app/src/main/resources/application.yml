@@ -13,12 +13,12 @@ spring:
     username: sa
     password: sa
 
-
   jpa:
     properties:
       dialect: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
+    show-sql: true
 
   h2:
     console:
