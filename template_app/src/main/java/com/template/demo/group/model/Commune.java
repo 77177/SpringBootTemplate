@@ -1,4 +1,4 @@
-package com.template.demo.person.models;
+package com.template.demo.group.model;
 
 import lombok.*;
 
@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,17 +13,13 @@ import java.time.LocalDate;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Person implements Cloneable {
+public class Commune {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String firstName;
-    private String middleName;
-    private String lastName;
-    private String gender;
-    private LocalDate birthDate;
+    private String groupName;
 
     @Override
     public Object clone() throws CloneNotSupportedException {

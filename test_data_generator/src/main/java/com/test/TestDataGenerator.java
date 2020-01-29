@@ -3,6 +3,7 @@ package com.test;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -11,7 +12,7 @@ import java.util.stream.Stream;
 
 public class TestDataGenerator {
 
-    public Field setField(Object o, Field f) throws IllegalAccessException {
+    public Field setField(Object o, Field f) throws IllegalAccessException, NoSuchMethodException, InstantiationException, InvocationTargetException {
 
         f.setAccessible(true);
         Random randomGenerator = new Random();
@@ -28,6 +29,10 @@ public class TestDataGenerator {
             f.set(o, (int) (Math.random() * 1000));
         } else if ((f.getType().equals(Long.class))){
             f.set(o, (long) (Math.random() * 1000));
+        } else if (f.getType().equals(LocalDate.class)){
+            f.set(o, LocalDate.now());
+        } else {
+            f.set(o, getTestObject(f.getType()));
         }
         return f;
     }
@@ -42,7 +47,7 @@ public class TestDataGenerator {
         fields.forEach(field -> {
             try {
                 setField(newInstance, field);
-            } catch (IllegalAccessException e) {
+            } catch (IllegalAccessException | NoSuchMethodException | InstantiationException | InvocationTargetException e) {
                 e.printStackTrace();
             }
         });
