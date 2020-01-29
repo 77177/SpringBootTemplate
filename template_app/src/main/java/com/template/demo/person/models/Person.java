@@ -1,11 +1,10 @@
 package com.template.demo.person.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.template.demo.group.model.Commune;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
@@ -25,6 +24,10 @@ public class Person implements Cloneable {
     private String lastName;
     private String gender;
     private LocalDate birthDate;
+
+    @JsonBackReference
+    @ManyToOne
+    Commune commune;
 
     @Override
     public Object clone() throws CloneNotSupportedException {

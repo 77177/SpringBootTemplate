@@ -1,15 +1,14 @@
 package com.template.demo.person.services;
 
+import com.template.demo.group.model.Commune;
 import com.template.demo.person.models.Person;
 import com.template.demo.person.repositories.PersonRepository;
-import com.test.TestDataGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +25,6 @@ class PersonServiceTest {
 
     private PersonService personServiceUnderTest;
 
-    private TestDataGenerator testDataGenerator = new TestDataGenerator();
-
     @BeforeEach
     void setUp() {
         initMocks(this);
@@ -35,60 +32,76 @@ class PersonServiceTest {
     }
 
     @Test
-    void testGetPerson() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    void testGetPerson() {
         // Setup
-        final Person person = testDataGenerator.getTestObject(Person.class);
-        final Optional<Person> personOptional = Optional.of(person);
 
         // Configure PersonRepository.findById(...).
-        when(mockPersonRepository.findById(person.getId())).thenReturn(personOptional);
+        final Optional<Person> person = Optional.of(new Person(0L, "firstName", "middleName", "lastName", "gender", LocalDate.of(2017, 1, 1), new Commune(0L, "groupName", Arrays.asList())));
+        when(mockPersonRepository.findById(0L)).thenReturn(person);
 
         // Run the test
-        final Person result = personServiceUnderTest.getPerson(person.getId());
+        final Person result = personServiceUnderTest.getPerson(0L);
 
         // Verify the results
-        verify(mockPersonRepository).findById(person.getId());
-        assertEquals(person, result);
     }
 
     @Test
-    void testUpdatePerson() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    void testUpdatePerson() {
         // Setup
-        final Person person = testDataGenerator.getTestObject(Person.class);
-
-        when(mockPersonRepository.existsById(person.getId())).thenReturn(true);
+        final Person person = new Person(0L, "firstName", "middleName", "lastName", "gender", LocalDate.of(2017, 1, 1), new Commune(0L, "groupName", Arrays.asList()));
+        when(mockPersonRepository.existsById(0L)).thenReturn(true);
 
         // Configure PersonRepository.save(...).
-
-        when(mockPersonRepository.save(person)).thenReturn(person);
+        final Person person1 = new Person(0L, "firstName", "middleName", "lastName", "gender", LocalDate.of(2017, 1, 1), new Commune(0L, "groupName", Arrays.asList()));
+        when(mockPersonRepository.save(any(Person.class))).thenReturn(person1);
 
         // Run the test
         final Long result = personServiceUnderTest.updatePerson(person);
 
         // Verify the results
-        verify(mockPersonRepository).save(person);
-        assertEquals(person.getId(), result);
+        assertEquals(0L, result);
     }
 
     @Test
-    void testCreatePerson() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, CloneNotSupportedException {
+    void testCreatePerson() {
         // Setup
-        final Person person = testDataGenerator.getTestObject(Person.class);
-
-        when(mockPersonRepository.existsById(person.getId())).thenReturn(false);
+        final Person person = new Person(0L, "firstName", "middleName", "lastName", "gender", LocalDate.of(2017, 1, 1), new Commune(0L, "groupName", Arrays.asList()));
+        when(mockPersonRepository.existsById(0L)).thenReturn(false);
 
         // Configure PersonRepository.save(...).
-        final Person createdPerson = (Person) person.clone();
-        createdPerson.setId(1L);
-
-        when(mockPersonRepository.save(person)).thenReturn(createdPerson);
+        final Person person1 = new Person(0L, "firstName", "middleName", "lastName", "gender", LocalDate.of(2017, 1, 1), new Commune(0L, "groupName", Arrays.asList()));
+        when(mockPersonRepository.save(any(Person.class))).thenReturn(person1);
 
         // Run the test
         final Long result = personServiceUnderTest.createPerson(person);
 
         // Verify the results
-        verify(mockPersonRepository).save(person);
-        assertEquals(createdPerson.getId(), result);
+        assertEquals(0L, result);
+    }
+
+    @Test
+    void testDeletePerson() {
+        // Setup
+
+        // Run the test
+        personServiceUnderTest.deletePerson(0L);
+
+        // Verify the results
+        verify(mockPersonRepository).deleteById(0L);
+    }
+
+    @Test
+    void testGetAllPersons() {
+        // Setup
+
+        // Configure PersonRepository.findAll(...).
+        final List<Person> people = Arrays.asList(new Person(0L, "firstName", "middleName", "lastName", "gender", LocalDate.of(2017, 1, 1), new Commune(0L, "groupName", Arrays.asList())));
+        when(mockPersonRepository.findAll()).thenReturn(people);
+
+        // Run the test
+        final List<Person> result = personServiceUnderTest.getAllPersons();
+
+        // Verify the results
     }
 
     @Test
@@ -100,33 +113,5 @@ class PersonServiceTest {
 
         // Verify the results
         verify(mockPersonRepository).deleteAll();
-    }
-
-    @Test
-    void testGetAllPersons() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        // Setup
-
-        // Configure PersonRepository.findAll(...).
-        final List<Person> peopleList = Collections.singletonList(testDataGenerator.getTestObject(Person.class));
-        when(mockPersonRepository.findAll()).thenReturn(peopleList);
-
-        // Run the test
-        final List<Person> result = personServiceUnderTest.getAllPersons();
-
-        // Verify the results
-        verify(mockPersonRepository).findAll();
-        assertEquals(peopleList, result);
-    }
-
-    @Test
-    void testDeletePerson() {
-        // Setup
-        long id = 0L;
-
-        // Run the test
-        personServiceUnderTest.deletePerson(id);
-
-        // Verify the results
-        verify(mockPersonRepository).deleteById(id);
     }
 }

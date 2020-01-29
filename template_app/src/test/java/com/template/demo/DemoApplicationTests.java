@@ -55,7 +55,7 @@ class DemoApplicationTests {
     public void testPostGetPutDelete() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         Person person = testDataGenerator.getTestObject(Person.class);
-
+        person.getCommune().getPeople().add(person);
         //POST TEST ----------------------------------------------------------------------------------------------
         ExtractableResponse<Response> postResponse = RestAssured.given().contentType(ContentType.JSON)
                 .body(person)

@@ -16,8 +16,8 @@ public class DatabaseConfig {
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSource);
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-        resourceDatabasePopulator.addScript(new ClassPathResource("/dataSQL/person_data.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("/dataSQL/commune_data.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/dataSQL/person_data.sql"));
         dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
         return dataSourceInitializer;
     }

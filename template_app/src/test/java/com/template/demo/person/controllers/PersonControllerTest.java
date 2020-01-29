@@ -1,13 +1,14 @@
 package com.template.demo.person.controllers;
 
+import com.template.demo.group.model.Commune;
 import com.template.demo.person.models.Person;
 import com.template.demo.person.services.PersonService;
-import com.test.TestDataGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -22,8 +23,6 @@ class PersonControllerTest {
 
     private PersonController personControllerUnderTest;
 
-    private TestDataGenerator testDataGenerator = new TestDataGenerator();
-
     @BeforeEach
     void setUp() {
         initMocks(this);
@@ -31,61 +30,53 @@ class PersonControllerTest {
     }
 
     @Test
-    void testGetPerson() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    void testGetPerson() {
         // Setup
 
         // Configure PersonService.getPerson(...).
-        final Person person = testDataGenerator.getTestObject(Person.class);
-        when(mockPersonService.getPerson(person.getId())).thenReturn(person);
+        final Person person = new Person(0L, "firstName", "middleName", "lastName", "gender", LocalDate.of(2017, 1, 1), new Commune(0L, "groupName", Arrays.asList()));
+        when(mockPersonService.getPerson(0L)).thenReturn(person);
 
         // Run the test
-        final Person result = personControllerUnderTest.getPerson(person.getId());
+        final Person result = personControllerUnderTest.getPerson(0L);
 
         // Verify the results
-        verify(mockPersonService).getPerson(person.getId());
-        assertEquals(person, result);
     }
 
     @Test
-    void testUpdatePerson() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    void testUpdatePerson() {
         // Setup
-        final Person person = testDataGenerator.getTestObject(Person.class);
-
-        when(mockPersonService.updatePerson(person)).thenReturn(person.getId());
+        final Person person = new Person(0L, "firstName", "middleName", "lastName", "gender", LocalDate.of(2017, 1, 1), new Commune(0L, "groupName", Arrays.asList()));
+        when(mockPersonService.updatePerson(any(Person.class))).thenReturn(0L);
 
         // Run the test
         final Long result = personControllerUnderTest.updatePerson(person);
 
         // Verify the results
-        verify(mockPersonService).updatePerson(person);
-        assertEquals(person.getId(), result);
+        assertEquals(0L, result);
     }
 
     @Test
-    void testCreatePerson() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    void testCreatePerson() {
         // Setup
-        final Person person = testDataGenerator.getTestObject(Person.class);
-
-        long createdId = 1L;
-        when(mockPersonService.createPerson(person)).thenReturn(createdId);
+        final Person person = new Person(0L, "firstName", "middleName", "lastName", "gender", LocalDate.of(2017, 1, 1), new Commune(0L, "groupName", Arrays.asList()));
+        when(mockPersonService.createPerson(any(Person.class))).thenReturn(0L);
 
         // Run the test
         final Long result = personControllerUnderTest.createPerson(person);
 
         // Verify the results
-        verify(mockPersonService).createPerson(person);
-        assertEquals(createdId, result);
+        assertEquals(0L, result);
     }
 
     @Test
     void testDeletePerson() {
         // Setup
-        long id = 0L;
 
         // Run the test
-        personControllerUnderTest.deletePerson(id);
+        personControllerUnderTest.deletePerson(0L);
 
         // Verify the results
-        verify(mockPersonService).deletePerson(id);
+        verify(mockPersonService).deletePerson(0L);
     }
 }
