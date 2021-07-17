@@ -18,7 +18,7 @@
         <lombok.version>1.18.10</lombok.version>
 		<rest-assured.version>2.9.0</rest-assured.version>
 		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <test_data_generator.version>1.0-SNAPSHOT</test_data_generator.version>
     </properties>
 
