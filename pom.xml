@@ -18,7 +18,6 @@
 
     <modules>
         <module>template_app</module>
-        <module>test_data_generator</module>
     </modules>
 
 
